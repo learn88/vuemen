@@ -12,7 +12,10 @@ module.exports = {
   async register(req, res) {
     try {
       const user = await User.create(req.body)
-      res.send(user)
+      res.send({
+        user: user,
+        token: jwtSignUser(user.toJSON())
+      })
     } catch (err) {
       res.status(400).send({
         success: false,
@@ -41,7 +44,6 @@ module.exports = {
           user.comparePassword(password, function(err, isMatch) {
             if (isMatch && !err) {
               // if user is found and password is right create a token
-              // var token = jwt.sign(user.toJSON(), settings.secret)
               // return the information including token as JSON
               res.send({
                 user: user,

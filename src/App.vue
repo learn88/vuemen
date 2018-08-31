@@ -1,22 +1,26 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <v-app id="inspire">
+    <navigation :mini="mini" :drawer="drawer" v-on:navigater="mini = !mini"></navigation>
+    <toolbar :mini="mini" v-on:navigater="mini = !mini"></toolbar>
+    <v-content>
+      <v-container fluid>
+        <router-view />
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+  import Navigation from '@/views/Layout/Navigation.vue'
+  import Toolbar from '@/views/Layout/Toolbar.vue'
+  export default {
+    data: () => ({
+      drawer: true,
+      mini: false
+    }),
+    components: { Navigation, Toolbar },
+    props: {
+      source: String
+    }
+  }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
